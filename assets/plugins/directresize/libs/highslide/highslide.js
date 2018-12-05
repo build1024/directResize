@@ -98,7 +98,7 @@ faders : [],
 
 pendingOutlines : {},
 clones : {},
-ie : (document.all && !window.opera),
+ie : /msie|trident/i.test(navigator.userAgent),
 safari : /Safari/.test(navigator.userAgent),
 geckoMac : /Macintosh.+rv:1\.[0-8].+Gecko/.test(navigator.userAgent),
 
@@ -476,7 +476,9 @@ preloadImages : function (number) {
 	
 	
 	// preload cursor
-	var cur = hs.createElement('img', { src: hs.graphicsDir + hs.restoreCursor });
+	if (hs.ie) {
+		var cur = hs.createElement('img', { src: hs.graphicsDir + hs.restoreCursor });
+	}
 },
 
 
@@ -1280,8 +1282,11 @@ focus : function() {
 	
 		this.content.title = hs.restoreTitle;
 		
-		hs.styleRestoreCursor = window.opera ? 'pointer' : 'url('+ hs.graphicsDir + hs.restoreCursor +'), pointer';
-		if (hs.ie && hs.ieVersion() < 6) hs.styleRestoreCursor = 'hand';
+		if (!hs.ie) {
+		   	hs.styleRestoreCursor = 'zoom-out';
+		} else {
+		   	hs.styleRestoreCursor = = 'url('+ hs.graphicsDir + hs.restoreCursor + '), auto';
+		}
 		this.content.style.cursor = hs.styleRestoreCursor;
 		
 	hs.focusKey = this.key;	

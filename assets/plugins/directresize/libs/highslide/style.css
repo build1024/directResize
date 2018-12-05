@@ -1,7 +1,14 @@
 .highslide {
-	cursor: url(graphics/zoomin.cur), pointer;
-    outline: none;
+	cursor: zoom-in;
+	outline: none;
 }
+
+@media all and (-ms-high-contrast: none) {
+	.highslide {
+		cursor: url(graphics/zoomin.cur), auto;
+	}
+}
+
 .highslide-active-anchor img {
 	visibility: hidden;
 }
