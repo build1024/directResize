@@ -340,11 +340,11 @@ class directResize {
 		// Путь - абсолютный, указан через /
 		if (substr($path, 0, 1)=="/") $path = substr($path, 1, strlen($path));
 		
-		if (!strstr($path, "http://")) $path =$modx->config['base_path'].$path;
+		if (!strstr($path, "http://") && !strstr($path, "https://")) $path =$modx->config['base_path'].$path;
 		
-		if (!file_exists($path) && !strstr($path, "http://")) return false;
+		if (!file_exists($path) && !strstr($path, "http://") && !strstr($path, "https://")) return false;
 		
-		if ($this->drconfig['allow_from_allremote'] &&  strstr($path, "http://")) return true;
+		if ($this->drconfig['allow_from_allremote'] &&  (strstr($path, "http://") || strstr($path, "https://"))) return true;
 		
 		$path = dirname($path);
 		
