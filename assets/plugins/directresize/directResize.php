@@ -97,10 +97,10 @@ class directResize {
 			$this->img_src_h = $size[1];
 		}
 			
-		$img_ext = strtolower(substr(strrchr($imgFile,'.'),1));
-		if (exif_imagetype($imgFile) == 1){ 
-			$newjpegimage = imagecreatefromgif($imgFile);
-			$newfilename = substr($imgFile,0,strrpos($imgFile,'.')).".".$img_ext;
+		$img_ext = strtolower(substr(strrchr($abs_imgFile,'.'),1));
+		if (exif_imagetype($abs_imgFile) == 1){ 
+			$newjpegimage = imagecreatefromgif($abs_imgFile);
+			$newfilename = substr($abs_imgFile,0,strrpos($imgFile,'.')).".".$img_ext;
 			imagejpeg($newjpegimage, $newfilename); 
 		}
 				
