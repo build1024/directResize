@@ -253,19 +253,19 @@ class directResize {
 	{
 		global $modx;
 		
-		if ($watermark[use_watermark]){	
-			if ($watermark[watermark_type] == "image"){
-				$this->thumbclass->img_watermark=$watermark[watermark_img];
-				$this->thumbclass->img_watermark_Valing=strtoupper($watermark[watermark_valign]);
-				$this->thumbclass->img_watermark_Haling=strtoupper($watermark[watermark_halign]);
+		if ($watermark['use_watermark']){
+			if ($watermark['watermark_type'] == "image"){
+				$this->thumbclass->img_watermark=$watermark['watermark_img'];
+				$this->thumbclass->img_watermark_Valing=strtoupper($watermark['watermark_valign']);
+				$this->thumbclass->img_watermark_Haling=strtoupper($watermark['watermark_halign']);
 			}else{
-				$this->thumbclass->txt_watermark=$watermark[watermark_txt];
-				$this->thumbclass->txt_watermark_color=$watermark[watermark_txt_color];
-				$this->thumbclass->txt_watermark_font=$watermark[watermark_font];
-				$this->thumbclass->txt_watermark_Valing=strtoupper($watermark[watermark_valign]);
-				$this->thumbclass->txt_watermark_Haling=strtoupper($watermark[watermark_halign]);
-				$this->thumbclass->txt_watermark_Hmargin=strtoupper($watermark[watermark_txt_hmargin]);
-				$this->thumbclass->txt_watermark_Vmargin=strtoupper($watermark[watermark_txt_vmargin]);
+				$this->thumbclass->txt_watermark=$watermark['watermark_txt'];
+				$this->thumbclass->txt_watermark_color=$watermark['watermark_txt_color'];
+				$this->thumbclass->txt_watermark_font=$watermark['watermark_font'];
+				$this->thumbclass->txt_watermark_Valing=strtoupper($watermark['watermark_valign']);
+				$this->thumbclass->txt_watermark_Haling=strtoupper($watermark['watermark_halign']);
+				$this->thumbclass->txt_watermark_Hmargin=strtoupper($watermark['watermark_txt_hmargin']);
+				$this->thumbclass->txt_watermark_Vmargin=strtoupper($watermark['watermark_txt_vmargin']);
 			}
 		}
 		// Специальный водяной знак для WYSIWYG-редактора
@@ -463,7 +463,7 @@ class directResize {
 	
 			$currentImgPath = preg_replace("/^.+src=('|\")/i","",$imgs[0][$n]);
 			$currentImgPath = preg_replace("/('|\").*$/i","",$currentImgPath);
-			$currentImgPath = str_replace($modx->config[site_url], "", $currentImgPath);
+			$currentImgPath = str_replace($modx->config['site_url'], "", $currentImgPath);
 			$currentImgPath = urldecode($currentImgPath);
 
 			preg_match('~\[(\+|\*|\()([^:\+\[\]]+)([^\[\]]*?)(\1|\))\]~s', $currentImgPath, $matches);
@@ -814,7 +814,7 @@ function ConvertFromBackend($o, $escape= true)
 		$thumbImgTag = $lien_g[0].$lien_img.$lien_d[0];
 		$o = str_replace($imgs[0][$n],$thumbImgTag,$o);	
 	}
-	$o = str_replace(DIRECTRESIZE_GALLERYDIR.$_REQUEST[id]."/wysiwyg_","", $o);
+	$o = str_replace(DIRECTRESIZE_GALLERYDIR.$_REQUEST['id']."/wysiwyg_","", $o);
 	if ($escape) $o = $modx->db->escape($o);
 	return $o;
 	
@@ -840,9 +840,9 @@ function ClearDRCache($clearCache = 0)
 	
 	if ($clearCache == 0 ) return;
 	
-	if ($clearCache == 1 && isset($_REQUEST[id])) 
+	if ($clearCache == 1 && isset($_REQUEST['id']))
 	{
-		SureRemoveDir($modx->config['base_path']."assets/drgalleries/".$_REQUEST[id]);
+		SureRemoveDir($modx->config['base_path']."assets/drgalleries/".$_REQUEST['id']);
 	}
 	
 	if ($clearCache == 2) 
@@ -901,7 +901,7 @@ function RenderOnFrontend($o, $config)
 	$drconfig['ftp_pass'] = (isset($ftp_pass)) ? $ftp_pass : "password"; // [ text ]
 	$drconfig['ftp_base_dir'] = (isset($ftp_base_dir)) ? $ftp_base_dir : "/"; // [ text ]
 	
-	$drconfig['docID'] = $modx->isBackend() ? $_REQUEST[id] : $modx->documentIdentifier;
+	$drconfig['docID'] = $modx->isBackend() ? $_REQUEST['id'] : $modx->documentIdentifier;
 	$drconfig['tpl'] = (isset($tpl)) ? $tpl : '';
 	$drconfig['allow_from_allremote'] =  isset($allow_from_allremote) ? $allow_from_allremote : FALSE;
 	

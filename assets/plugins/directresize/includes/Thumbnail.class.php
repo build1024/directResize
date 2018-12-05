@@ -357,7 +357,7 @@ class DRThumbnail {
     **/
     function process () {
 		
-    	$this->img["src"] = $this->img[format] == "JPEG" ? ImageCreateFromJPEG ($this->imgfile) : ImageCreateFromPNG ($this->imgfile);
+    	$this->img["src"] = $this->img['format'] == "JPEG" ? ImageCreateFromJPEG ($this->imgfile) : ImageCreateFromPNG ($this->imgfile);
 		
     	$memory_limit = ini_get('memory_limit');
 		if ($memory_limit < $this->memory_limit) {
