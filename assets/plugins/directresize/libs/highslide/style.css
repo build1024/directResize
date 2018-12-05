@@ -32,9 +32,7 @@
     
     border: 2px solid white;
     border-top: none;
-    font-family: Verdana, Helvetica;
-    font-size: 10pt;
-    padding: 5px;
+    font-size: 100%;
     background-color: white;
 }
 .highslide-loading {
