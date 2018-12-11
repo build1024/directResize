@@ -13,7 +13,7 @@ HTML;
 $header  = 	'
 <link rel="stylesheet" href="'.DIRECTRESIZE_PATH.'libs/highslide/style.css" type="text/css" media="screen" />
 <script type="text/javascript" src="'.DIRECTRESIZE_PATH.'libs/highslide/highslide.js"></script>
-<script type="text/javascript" src="'.DIRECTRESIZE_PATH.'lang/english.highslide.js"></script>
+<script type="text/javascript" src="'.DIRECTRESIZE_PATH.'lang/' . $language . '.highslide.js"></script>
 <script type="text/javascript">
 	hs.graphicsDir	= "'.DIRECTRESIZE_PATH.'libs/highslide/graphics/";
 	hs.outlineType 	= "rounded-white";
@@ -30,10 +30,15 @@ $lightbox_mode = 2;
 //$thumb_watermark_type = "image";
 
 // Very important parameter - paths to folders, where the images will be proccesed. Use comma as separator. You can use remote paths with http://.
-$allow_from="assets/images";
+$allow_from="assets/images,https://upload.wikimedia.org/";
 
 // Method for thumbs generating. 0 means that firstly image is reduced, then it is cropped to fit in the rectangle thumb width õ thumb height.
-$resize_method = 0;
+$resize_method = 3;
 
+$big_width = 1024;
+$big_height = 768;
+
+$big_quality = 95;
+$thumb_quality = 95;
 
 ?>

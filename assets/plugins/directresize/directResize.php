@@ -107,6 +107,7 @@ class directResize {
 		include_once($modx->config['base_path'].DIRECTRESIZE_PATH.'includes/Thumbnail.class.php');
 				
 		$this->thumbclass = new DRThumbnail($abs_imgFile);
+		$this->thumbclass->memory_limit='256M';
 		
 		if($img_ext == "jpg" || $img_ext == "jpeg"){
 			$this->thumbclass->output_format='JPG';
@@ -253,7 +254,7 @@ class directResize {
 	{
 		global $modx;
 		
-		if ($watermark['use_watermark']){
+		if ($watermark['use_watermark']){	
 			if ($watermark['watermark_type'] == "image"){
 				$this->thumbclass->img_watermark=$watermark['watermark_img'];
 				$this->thumbclass->img_watermark_Valing=strtoupper($watermark['watermark_valign']);
@@ -840,7 +841,7 @@ function ClearDRCache($clearCache = 0)
 	
 	if ($clearCache == 0 ) return;
 	
-	if ($clearCache == 1 && isset($_REQUEST['id']))
+	if ($clearCache == 1 && isset($_REQUEST['id'])) 
 	{
 		SureRemoveDir($modx->config['base_path']."assets/drgalleries/".$_REQUEST['id']);
 	}
@@ -857,6 +858,7 @@ function RenderOnFrontend($o, $config)
 {
 	global $modx, $_lang;
 
+	$language = isset($language)? $language:$modx->config['manager_language'];
 	if (isset($config)) include_once $modx->config['base_path'].DIRECTRESIZE_PATH."configs/$config.config.php";
 	
 	$drconfig['allow_from'] = isset($allow_from) ? $allow_from : (isset($deny_from) ? NULL : "assets/images");
@@ -920,7 +922,6 @@ function RenderOnFrontend($o, $config)
 	
 	if (!$modx->isBackend())
 	{
-		$language = isset($language)? $language:$modx->config['manager_language'];
 		include_once(DIRECTRESIZE_PATH."lang/english.inc.php");
 		if($language!="english" && $language!='') 
 		{
