@@ -4,9 +4,9 @@
 $tpl = <<<HTML
 <a href="[+dr.bigPath+]" class="highslide" onclick="return hs.expand(this, {captionId: 'caption[+dr.id+]'})">
 	<img src="[+dr.thumbPath+]" width="[+dr.thumbWidth+]" height="[+dr.thumbHeight+]" /></a>
-<div class="highslide-caption" id="caption[+dr.id+]">
+<span class="highslide-caption" id="caption[+dr.id+]">
 [+dr.title+]
-</div>
+</span>
 HTML;
 
 // All CSS and JS files and all other code that we need in our <HEAD> tag.
