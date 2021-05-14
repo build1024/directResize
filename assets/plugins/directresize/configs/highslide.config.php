@@ -12,7 +12,7 @@ HTML;
 // All CSS and JS files and all other code that we need in our <HEAD> tag.
 $header  = 	'
 <link rel="stylesheet" href="'.DIRECTRESIZE_PATH.'libs/highslide/style.css" type="text/css" media="screen" />
-<script type="text/javascript" src="'.DIRECTRESIZE_PATH.'libs/highslide/highslide.js"></script>
+<script type="text/javascript" src="'.DIRECTRESIZE_PATH.'libs/highslide/highslide.packed.js"></script>
 <script type="text/javascript" src="'.DIRECTRESIZE_PATH.'lang/' . $language . '.highslide.js"></script>
 <script type="text/javascript">
 	hs.graphicsDir	= "'.DIRECTRESIZE_PATH.'libs/highslide/graphics/";
