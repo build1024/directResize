@@ -15,7 +15,6 @@
 * - Autodetect the GD library version supported by PHP
 * - Calculate quality factor for a specific file size in JPEG format.
 * - Suport bicubic resample algorithm
-* - Tested: PHP 4 valid
 *
 * @package Thumbnail and Watermark Class
 * @author Emilio Rodriguez <emiliort@gmail.com>
@@ -32,8 +31,8 @@ $thumb->size_height(300);				    // set height for thumbnail, or
 $thumb->size_auto(200);					    // set the biggest width or height for thumbnail
 $thumb->size(150,113);		                // set the biggest width and height for thumbnail
 
-$thumb->quality=75;                        //default 75 , only for JPG format
-$thumb->output_format='JPG';               // JPG | PNG
+$thumb->quality=75;                        //default 75 , only for JPG and WEBP format
+$thumb->output_format='JPG';               // JPG | PNG | WEBP
 $thumb->jpeg_progressive=0;                // set progressive JPEG : 0 = no , 1 = yes
 $thumb->allow_enlarge=false;               // allow to enlarge the thumbnail
 $thumb->CalculateQFactor(10000);           // Calculate JPEG quality factor for a specific size in bytes
@@ -186,20 +185,25 @@ class DRThumbnail {
 		$img_info =  getimagesize( $imgfile );
         //detect image format
         switch( $img_info[2] ){
-	    		case 2:
+	    		case IMAGETYPE_JPEG:
 	    			//JPEG
 	    			$this->img["format"]="JPEG";
 	    			//$this->img["src"] = ImageCreateFromJPEG ($imgfile);
-        		break;
-	    		case 3:
+				break;
+	    		case IMAGETYPE_PNG:
 	    			//PNG
 	    			$this->img["format"]="PNG";
 	    			//$this->img["src"] = ImageCreateFromPNG ($imgfile);
-                    $this->img["des"] =  $this->img["src"];
-  	    		break;
+				$this->img["des"] =  $this->img["src"];
+  	    			break;
+			case IMAGETYPE_WEBP: // PHP 7.1.0+
+	    			//WEBP
+	    			$this->img["format"]="WEBP";
+	    			//$this->img["src"] = ImageCreateFromWEBP ($imgfile);
+				break;
 	    		default:
-	                $this->error_msg="Not Supported File";
-	 				return false;
+				$this->error_msg="Not Supported File";
+	 			return false;
 	    }//case
 		$this->img["x"] = $img_info[0];  //original dimensions
 		$this->img["y"] = $img_info[1];
@@ -313,9 +317,11 @@ class DRThumbnail {
 		Header("Content-Type: image/".$this->img["format"]);
         if ($this->output_format=="PNG") { //PNG
     	imagePNG($this->img["des"]);
+        }else if ($this->output_format=="WEBP") { //WEBP
+    	imageWEBP($this->img["des"],null,$this->quality);
     	} else {
             imageinterlace( $this->img["des"], $this->jpeg_progressive);
-         	imageJPEG($this->img["des"],"",$this->quality);
+         	imageJPEG($this->img["des"],null,$this->quality);
         }
 	}
 
@@ -343,6 +349,8 @@ class DRThumbnail {
         }
         if ($this->output_format=="PNG") { //PNG
     	    imagePNG($this->img["des"],"$save");
+        }else if ($this->output_format=="WEBP") { //WEBP
+    	    imageWEBP($this->img["des"],"$save",$this->quality);
     	} else {
            imageinterlace( $this->img["des"], $this->jpeg_progressive);
            imageJPEG($this->img["des"],"$save",$this->quality);
@@ -357,7 +365,7 @@ class DRThumbnail {
     **/
     function process () {
 		
-    	$this->img["src"] = $this->img['format'] == "JPEG" ? ImageCreateFromJPEG ($this->imgfile) : ImageCreateFromPNG ($this->imgfile);
+    	$this->img["src"] = $this->img['format'] == "JPEG" ? ImageCreateFromJPEG ($this->imgfile) : ($this->img['format'] == "WEBP" ? ImageCreateFromWEBP($this->imgfile) : ImageCreateFromPNG ($this->imgfile));
 		
     	$memory_limit = ini_get('memory_limit');
 		if ($memory_limit < $this->memory_limit) {

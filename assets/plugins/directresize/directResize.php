@@ -110,7 +110,8 @@ class directResize {
 		$this->thumbclass->memory_limit='256M';
 		
 		if($img_ext == "jpg" || $img_ext == "jpeg"){
-			$this->thumbclass->output_format='JPG';
+		}else if($img_ext == "webp"){
+			$this->thumbclass->output_format='WEBP';
 		}else if($img_ext == "png"){
 			$this->thumbclass->output_format='PNG';
 		}
@@ -318,7 +319,7 @@ class directResize {
 	{	
 		$img_ext = strtolower(substr(strrchr($imgFile,'.'),1));
 			
-		if ($img_ext != "jpg" && $img_ext != "jpeg" && $img_ext != "png"){
+		if ($img_ext != "jpg" && $img_ext != "jpeg" && $img_ext != "png" && $img_ext != "webp"){
 			return false;
 		}
 		
